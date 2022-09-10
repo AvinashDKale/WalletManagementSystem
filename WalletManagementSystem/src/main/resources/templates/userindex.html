@@ -1,27 +1,64 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 <title>Wallet Management System</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
 	crossorigin="anonymous">
+<link
+	href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css"
+	rel="stylesheet" crossorigin="anonymous">
 </head>
-<body>
-	<h1 align=center>Wallet</h1>
-	<div style="padding-left: 10px" align=right
-		sec:authorize="isAuthenticated()">
-		Welcome <b><span style="color: green; font-style: italic;"
-			sec:authentication="name">Username </span></b>&nbsp; ! &nbsp;&nbsp;
-		&nbsp;
+<body data-new-gr-c-s-check-loaded="8.903.0" data-gr-ext-installed="">
+	<div class="container " align=center>
+		<h1 align=center>Wallet</h1>
+		
+		<div style="padding-left: 10px;" align=center
+			sec:authorize="isAuthenticated()">
+			<h3>
+				welcome <b><span style="font-style: italic;"
+					sec:authentication="name">Username </span></b>&nbsp; ! &nbsp;&nbsp;
+				&nbsp;
+			</h3>
+		</div>
+		<div style="size: 50px;" th:if="${session.messege3}"
+			class="alert alert-success" role="alert">
+			<span th:text="${session.messege3.content}"> </span>
+		</div>
+		<div th:if="${session.messege4}" class="alert alert-success"
+			role="alert">
+			<span th:text="${session.messege4.content}"> </span>
+		</div>
+		<div th:if="${session.messege5}" class="alert alert-success"
+			role="alert">
+			<span th:text="${session.messege5.content}"> </span>
+		</div>
+		<hr>
+		<div class="">
+			<a th:href="@{/credit}" class="btn btn-primary btn-sm s">Add
+				Money</a>&nbsp;&nbsp; <a th:href="@{/debit}"
+				class="btn btn-primary btn-sm ">Withdraw Money</a>&nbsp;&nbsp; <a
+				th:href="@{/transactions/history}" class="btn btn-primary btn-sm ">Transactions
+				History</a>&nbsp;&nbsp; <a th:href="@{/balence}"
+				class="btn btn-primary btn-sm ">Balence</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-		<form th:action="@{/logout}" method="post">
-			<input style="position: right" type="submit" value="Logout" />
-		</form>
+			<a align=right th:href="@{/}"><button>Home</button></a>&nbsp;&nbsp; <a
+				align=right th:href="@{/logout}"><button>Logout</button></a>&nbsp;&nbsp;
+			<br>
+		</div>
+		<hr>
+
+
 	</div>
-	<div class="container my-2"></div>
 </body>
 </html>

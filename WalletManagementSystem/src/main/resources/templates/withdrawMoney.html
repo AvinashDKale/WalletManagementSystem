@@ -1,0 +1,64 @@
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Wallet Management System</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	<link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+
+<body data-new-gr-c-s-check-loaded="8.903.0" data-gr-ext-installed="">
+	<div class="container " align=center>
+		<h1 align=center>Wallet</h1>
+		<h2 align=center>Withdraw Money</h2>
+		<div style="padding-left: 10px;" align=center sec:authorize="isAuthenticated()">
+			<h3>
+				welcome <b><span style="font-style: italic;" sec:authentication="name">Username </span></b>&nbsp; !
+				&nbsp;&nbsp;
+				&nbsp;
+			</h3>
+		</div>
+		<div align=right>
+			<a th:href="@{/}"><button>Home</button></a>&nbsp;&nbsp;
+			<a th:href="@{/logout}"><button>Logout</button></a>&nbsp;&nbsp;
+			<br>
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<div th:if="${session.messege}" class="alert alert-danger" role="alert">
+			<span th:text="${session.messege.content}"> </span>
+		</div>
+		<div th:if="${session.messege2}" class="alert alert-danger" role="alert">
+			<span th:text="${session.messege2.content}"> </span>
+		</div>
+		<script type="text/javascript">
+
+			$(document).ready(function () {
+
+				window.setTimeout(function () {
+					$(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+						$(this).remove();
+					});
+				}, 5000);
+
+			});
+		</script>
+
+		<hr>
+		<form action="#" th:action="@{/transactions/debit}" method="POST">
+
+
+			<label>Enter the amount</label><br> <input type="number" name="debit" class="form-control mb-4 col-4" />
+			<br> <input class="btn btn-success" type="submit" name="button" value="Withdraw Money" />
+		</form>
+		<hr>
+	</div>
+</body>
+
+</html>
+
+</html>

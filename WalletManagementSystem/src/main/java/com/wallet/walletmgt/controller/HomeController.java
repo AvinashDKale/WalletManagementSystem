@@ -2,42 +2,75 @@ package com.wallet.walletmgt.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import com.wallet.walletmgt.messege.Messege;
-import com.wallet.walletmgt.repository.UserRepository;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.wallet.walletmgt.entity.User;
+import com.wallet.walletmgt.service.TransactionsServiceImpl;
 
 @Controller
 public class HomeController {
-	
+
 	@Autowired
-    private UserRepository userrepo;
-	
-	
-	
+	private TransactionsServiceImpl transactionsService;
+
 	@GetMapping(value = "/")
 	public String viewHomePage(Model model, HttpServletRequest request, HttpSession session) {
-		
-		model.addAttribute("users",userrepo.findAll());
-		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		 boolean hasUserRole = authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ADMIN"));
-		 
-		 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-         String username = ((UserDetails) principal).getUsername();
-         Messege msg = new Messege();
-		 if (hasUserRole) {
-	            return "adminindex";
-	            
-	        } else {
-	        	return "userindex";
-	        }
+
+		return transactionsService.viewHomePage(model, request, session);
 	}
 
+	@GetMapping(value = "/user/add")
+	public String addBookForm(Model model) {
+
+		return transactionsService.addBookForm(model);
+	}
+
+	@PostMapping(value = "/user/save")
+	public String saveUser(@ModelAttribute("user") User user) {
+
+		return transactionsService.saveUser(user);
+	}
+
+	@GetMapping(value = "/credit")
+	public String addMoneyW(Model model) {
+
+		return transactionsService.addMoneyW(model);
+	}
+
+	@GetMapping(value = "/debit")
+	public String withdrawMoneyW(Model model) {
+
+		return transactionsService.withdrawMoneyW(model);
+	}
+
+	@PostMapping(value = "/transactions/credit")
+	public String addMoney(@RequestParam(value = "credit", required = false) double credit, HttpSession session) {
+
+		return transactionsService.credit(credit, session);
+	}
+
+	@PostMapping(value = "/transactions/debit")
+	public String withdrawMoney(@RequestParam(value = "debit") double debit, HttpSession session) {
+
+		return transactionsService.debit(debit, session);
+
+	}
+
+	@GetMapping(value = "/balence")
+	public String balence(HttpSession session) {
+
+		return transactionsService.balence(session);
+	}
+
+	@GetMapping("/transactions/history")
+	public String transactionsHistory(Model model) {
+
+		return transactionsService.transactionHistory(model);
+
+	}
 }
